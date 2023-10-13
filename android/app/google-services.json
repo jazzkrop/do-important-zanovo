@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "792161722138",
+    "project_id": "do-important",
+    "storage_bucket": "do-important.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792161722138:android:92605c6e2a0bd28a4216a3",
+        "android_client_info": {
+          "package_name": "com.example.do_important_zanovo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVWhYLd9fQDbkNGVxNmsKbWuq30UKaCfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
