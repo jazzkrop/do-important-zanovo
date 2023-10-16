@@ -1,11 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:do_important_zanovo/src/core/services/google_sign_in.dart';
+import 'package:do_important_zanovo/src/sample_feature/value.dart';
 import 'package:do_important_zanovo/src/widgets/screen_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../settings/settings_view.dart';
 import 'sample_item.dart';
 
 /// Displays a list of SampleItems.
@@ -16,12 +16,12 @@ class SampleItemListView extends StatefulWidget {
 
   List<SampleItem> items = [
     SampleItem(
-      id: '1',
-      createdAt: DateTime.now(),
-      importance: 1,
-      title: 'УМ підготуватись до тесту',
-      reason: 'якісний пастор гарно говорить',
-    ),
+        id: '1',
+        createdAt: DateTime.now(),
+        importance: 1,
+        title: 'УМ підготуватись до тесту, бо буде бобо, а потім син...',
+        reason: 'якісний пастор гарно говорить',
+        valuesIds: ['1']),
     SampleItem(
       id: '2',
       createdAt: DateTime.now().add(const Duration(hours: 2)),
@@ -41,10 +41,11 @@ class SampleItemListView extends StatefulWidget {
       createdAt: DateTime.now().add(const Duration(hours: 1)),
       importance: 4,
       title: 'О душ',
-      reason: 'бути чисним це класно',
+      reason: 'бути чесним це класно',
     ),
   ];
 
+  List<Value> values = [Value(id: '1', title: 'гроші')];
   @override
   State<SampleItemListView> createState() => _SampleItemListViewState();
 }
@@ -54,7 +55,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
   void initState() {
     super.initState();
 
-    var internetConnection;
+    bool internetConnection;
 
     if (FirebaseAuth.instance.currentUser != null) {
       return;
@@ -194,6 +195,9 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 24,
+                ),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -201,32 +205,47 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                   itemCount: widget.items.length,
                   itemBuilder: (BuildContext context, int index) {
                     final item = widget.items[index];
+                    const double cardBorderRadius = 16.0;
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 16, right: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Card(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(cardBorderRadius))),
+                            //  shape: ShapeBorder.lerp(, b, t),
 
-                    return Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.primary,
-                                width: 4.0,
-                                style: BorderStyle.solid),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
+                            child: InkWell(
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(cardBorderRadius)),
+                              onTap: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text(item.title,
+                                        style: const TextStyle(
+                                            fontSize: 18, height: 1.05)),
+                                    Text(item.reason),
+                                    if (item.valuesIds != null)
+                                      ...item.valuesIds!.map(
+                                        (e) => Text(widget.values
+                                            .firstWhere(
+                                                (element) => element.id == e)
+                                            .title),
+                                      )
+                                  ],
+                                ),
+                              ),
                             ),
-                          ), //
-                          child: Column(
-                            children: [
-                              Text(item.title),
-                              const SizedBox(
-                                height: 50,
-                              )
-                            ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: 200,
-                        )
-                      ],
+                          const SizedBox(
+                            height: 16,
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),

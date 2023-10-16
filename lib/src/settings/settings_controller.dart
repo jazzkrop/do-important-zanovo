@@ -18,7 +18,8 @@ class SettingsController with ChangeNotifier {
   // Make ThemeMode a private variable so it is not updated directly without
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
-  final Color _seedColor = Color.fromARGB(255, 162, 111, 243);
+  // final Color _seedColor = Color.fromARGB(255, 162, 111, 243);
+  final Color _seedColor = Color.fromARGB(255, 111, 243, 157);
 
   // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
