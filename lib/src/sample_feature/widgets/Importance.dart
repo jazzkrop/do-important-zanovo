@@ -8,16 +8,16 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (importance) {
       case 1:
-        return Text("терміново важливо");
+        return const Text("терміново важливо");
       case 2:
-        return Text('не терміново важливо');
+        return const Text('не терміново важливо');
       case 3:
-        return Text('терміново не важливо');
+        return const Text('терміново не важливо');
       case 4:
-        return Text('не терміново не важливо');
+        return const Text('не терміново не важливо');
 
       default:
-        return SizedBox(
+        return const SizedBox(
           height: 0,
         );
     }
