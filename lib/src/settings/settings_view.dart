@@ -17,7 +17,9 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('Налаштування'),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -33,15 +35,15 @@ class SettingsView extends StatelessWidget {
           items: const [
             DropdownMenuItem(
               value: ThemeMode.system,
-              child: Text('System Theme'),
+              child: Text('Повторювати системну'),
             ),
             DropdownMenuItem(
               value: ThemeMode.light,
-              child: Text('Light Theme'),
+              child: Text('Світла'),
             ),
             DropdownMenuItem(
               value: ThemeMode.dark,
-              child: Text('Dark Theme'),
+              child: Text('Темна'),
             )
           ],
         ),

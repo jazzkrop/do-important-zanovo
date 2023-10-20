@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ScreenWrapper extends StatelessWidget {
-  const ScreenWrapper({super.key, required this.child});
+  const ScreenWrapper(
+      {super.key, required this.child, required this.onTapAction});
   final Widget child;
+  final Function onTapAction;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class ScreenWrapper extends StatelessWidget {
               "do important",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
             ),
-            onPressed: () {},
+            onPressed: () {
+              onTapAction();
+            },
           ),
         )
       ]),
