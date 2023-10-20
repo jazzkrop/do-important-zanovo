@@ -22,27 +22,41 @@ class MyApp extends StatelessWidget {
     return ListenableBuilder(
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
+        ThemeData themeData = ThemeData(
+          bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
+          fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
+          textTheme: GoogleFonts.ysabeauInfantTextTheme()
+              .copyWith(titleMedium: const TextStyle(fontSize: 17)),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: settingsController.seedColor,
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          ),
+        );
+        ThemeData themeDataDark = ThemeData(
+          bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
+          fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
+          textTheme: GoogleFonts.ysabeauInfantTextTheme(
+                  ThemeData(brightness: Brightness.dark).textTheme)
+              .copyWith(titleMedium: const TextStyle(fontSize: 17)),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: settingsController.seedColor,
+            brightness: Brightness.dark,
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          ),
+        );
         return MaterialApp(
           restorationScopeId: 'app',
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
-            textTheme: GoogleFonts.ysabeauInfantTextTheme(),
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: settingsController.seedColor,
-            ),
-          ),
-          darkTheme: ThemeData(
-            fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
-            textTheme: GoogleFonts.ysabeauInfantTextTheme(
-                ThemeData(brightness: Brightness.dark).textTheme),
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: settingsController.seedColor,
-              brightness: Brightness.dark,
-            ),
-          ),
+          theme: themeData,
+          darkTheme: themeDataDark,
           themeMode: settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
@@ -56,7 +70,7 @@ class MyApp extends StatelessWidget {
                     return SettingsView(controller: settingsController);
                   case SampleItemListView.routeName:
                   default:
-                    return SampleItemListView();
+                    return SampleItemListView(controller: settingsController);
                 }
               },
             );
