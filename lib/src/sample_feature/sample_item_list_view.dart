@@ -128,7 +128,7 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                     child: Column(
                       children: [
                         TextField(
-                          autofocus: true,
+                          // autofocus: true,
                           maxLength: 60,
                           scrollPadding: EdgeInsets.zero,
                           decoration: const InputDecoration(
@@ -147,9 +147,9 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                           },
                         ),
                         TextField(
-                          autofocus: true,
+                          // autofocus: true,
                           maxLength: 30,
-                          focusNode: descriptionFocusNode,
+                          // focusNode: descriptionFocusNode,
                           decoration: const InputDecoration(
                               alignLabelWithHint: true,
                               labelText: "чому",
@@ -161,6 +161,32 @@ class _SampleItemListViewState extends State<SampleItemListView> {
                                 .titleMedium
                                 ?.fontSize,
                           ),
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                const RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 4.0),
+                                    child: Text('urgent'),
+                                  ),
+                                ),
+                                AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Container(
+                                    width: double.infinity,
+                                    color:
+                                        Theme.of(context).colorScheme.tertiary,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [],
+                            )
+                          ],
                         )
                       ],
                     ),
