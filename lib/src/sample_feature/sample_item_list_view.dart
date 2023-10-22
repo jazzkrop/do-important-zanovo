@@ -75,7 +75,6 @@ class SampleItemListView extends StatefulWidget {
     ),
   ];
 
-  List<Value> values = [Value(id: '1', title: 'гроші')];
   @override
   State<SampleItemListView> createState() => _SampleItemListViewState();
 }
@@ -121,74 +120,155 @@ class _SampleItemListViewState extends State<SampleItemListView> {
           var descriptionFocusNode = FocusNode();
           showModalBottomSheet(
               context: context,
+              isScrollControlled: true,
               builder: (BuildContext context) {
                 return Container(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        TextField(
-                          // autofocus: true,
-                          maxLength: 60,
-                          scrollPadding: EdgeInsets.zero,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
-                              labelText: "що",
-                              contentPadding: EdgeInsets.zero,
-                              hintText: 'шо будеш робити?'),
-                          style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.fontSize,
-                          ),
-                          onSubmitted: (text) {
-                            descriptionFocusNode.requestFocus();
-                          },
-                        ),
-                        TextField(
-                          // autofocus: true,
-                          maxLength: 30,
-                          // focusNode: descriptionFocusNode,
-                          decoration: const InputDecoration(
-                              alignLabelWithHint: true,
-                              labelText: "чому",
-                              contentPadding: EdgeInsets.zero,
-                              hintText: 'чому ти це робиш?'),
-                          style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.fontSize,
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                const RotatedBox(
-                                  quarterTurns: 3,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 4.0),
-                                    child: Text('urgent'),
-                                  ),
-                                ),
-                                AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Container(
-                                    width: double.infinity,
-                                    color:
-                                        Theme.of(context).colorScheme.tertiary,
-                                  ),
-                                )
-                              ],
+                  height: 450,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(
+                        decelerationRate: ScrollDecelerationRate.fast),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          TextField(
+                            // autofocus: true,
+                            maxLength: 60,
+                            scrollPadding: EdgeInsets.zero,
+                            decoration: const InputDecoration(
+                                alignLabelWithHint: true,
+                                labelText: "що",
+                                contentPadding: EdgeInsets.zero,
+                                hintText: 'шо будеш робити?'),
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.fontSize,
                             ),
-                            Row(
-                              children: [],
-                            )
-                          ],
-                        )
-                      ],
+                            onSubmitted: (text) {
+                              descriptionFocusNode.requestFocus();
+                            },
+                          ),
+                          TextField(
+                            // autofocus: true,
+                            maxLength: 30,
+                            // focusNode: descriptionFocusNode,
+                            decoration: const InputDecoration(
+                                alignLabelWithHint: true,
+                                labelText: "чому",
+                                contentPadding: EdgeInsets.zero,
+                                hintText: 'чому ти це робиш?'),
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.fontSize,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  const RotatedBox(
+                                    quarterTurns: 3,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 4.0),
+                                      child: Text('важливо'),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text("терміново"),
+                                        SizedBox(height: 4),
+                                        AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Container(
+                                            width: double.infinity,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text("почекає"),
+                                        SizedBox(height: 4),
+                                        AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Container(
+                                            width: double.infinity,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 42,
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 24,
+                                  ),
+                                  const RotatedBox(
+                                    quarterTurns: 3,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 4.0),
+                                      child: Text('не важливо'),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        AspectRatio(
+                                          aspectRatio: 1,
+                                          child: Container(
+                                            width: double.infinity,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .tertiary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: Container(
+                                        width: double.infinity,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 42,
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 100,
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 );
