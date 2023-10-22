@@ -122,154 +122,230 @@ class _SampleItemListViewState extends State<SampleItemListView> {
               context: context,
               isScrollControlled: true,
               builder: (BuildContext context) {
-                return Container(
-                  height: 450,
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(
-                        decelerationRate: ScrollDecelerationRate.fast),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Column(
-                        children: [
-                          TextField(
-                            // autofocus: true,
-                            maxLength: 60,
-                            scrollPadding: EdgeInsets.zero,
-                            decoration: const InputDecoration(
-                                alignLabelWithHint: true,
-                                labelText: "що",
-                                contentPadding: EdgeInsets.zero,
-                                hintText: 'шо будеш робити?'),
-                            style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.fontSize,
-                            ),
-                            onSubmitted: (text) {
-                              descriptionFocusNode.requestFocus();
-                            },
+                return SizedBox(
+                  height: 443.3,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: TextField(
+                          // autofocus: true,
+                          maxLength: 60,
+                          scrollPadding: EdgeInsets.zero,
+                          decoration: const InputDecoration(
+                              alignLabelWithHint: true,
+                              labelText: "що",
+                              contentPadding: EdgeInsets.zero,
+                              hintText: 'шо будеш робити?'),
+                          style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.fontSize,
                           ),
-                          TextField(
-                            // autofocus: true,
-                            maxLength: 30,
-                            // focusNode: descriptionFocusNode,
-                            decoration: const InputDecoration(
-                                alignLabelWithHint: true,
-                                labelText: "чому",
-                                contentPadding: EdgeInsets.zero,
-                                hintText: 'чому ти це робиш?'),
-                            style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.fontSize,
-                            ),
+                          onSubmitted: (text) {
+                            descriptionFocusNode.requestFocus();
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        child: TextField(
+                          // autofocus: true,
+                          maxLength: 30,
+                          // focusNode: descriptionFocusNode,
+                          decoration: const InputDecoration(
+                              alignLabelWithHint: true,
+                              labelText: "чому",
+                              contentPadding: EdgeInsets.zero,
+                              hintText: 'чому ти це робиш?'),
+                          style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.fontSize,
                           ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: 4.0, right: 26, top: 0),
+                                    child: SizedBox(
+                                        height: 14,
+                                        child: Text(
+                                          'важливо',
+                                          style: TextStyle(
+                                              height: 0.4, fontSize: 14),
+                                        )),
                                   ),
-                                  const RotatedBox(
-                                    quarterTurns: 3,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 4.0),
-                                      child: Text('важливо'),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text("терміново"),
-                                        SizedBox(height: 4),
-                                        AspectRatio(
-                                          aspectRatio: 1,
-                                          child: Container(
-                                            width: double.infinity,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .tertiary,
-                                          ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text("терміново"),
+                                      SizedBox(height: 4),
+                                      AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          width: double.infinity,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text("почекає"),
-                                        SizedBox(height: 4),
-                                        AspectRatio(
-                                          aspectRatio: 1,
-                                          child: Container(
-                                            width: double.infinity,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .tertiary,
-                                          ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      Text("почекає"),
+                                      SizedBox(height: 4),
+                                      AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          width: double.infinity,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondaryContainer,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 42,
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                  ),
-                                  const RotatedBox(
-                                    quarterTurns: 3,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(bottom: 4.0),
-                                      child: Text('не важливо'),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        AspectRatio(
-                                          aspectRatio: 1,
-                                          child: Container(
-                                            width: double.infinity,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .tertiary,
+                                ),
+                                SizedBox(
+                                  width: 124,
+                                  height: 120,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        height: 80,
+                                        width: 80,
+                                        child: FilledButton.tonal(
+                                          style: FilledButton.styleFrom(
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(24),
+                                                bottomLeft: Radius.circular(24),
+                                              ),
+                                            ),
                                           ),
+                                          child: const SizedBox(
+                                            height: 24,
+                                            child: Text(
+                                              "е..",
+                                              style: TextStyle(
+                                                  fontSize: 24, height: 0.4),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: Container(
-                                        width: double.infinity,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary,
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(bottom: 4.0),
+                                    child: SizedBox(
+                                      height: 14,
+                                      child: Text(
+                                        'не важливо',
+                                        style: TextStyle(
+                                            fontSize: 14, height: 0.4),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 42,
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 100,
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: [
+                                      AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          width: double.infinity,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surface,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Container(
+                                      width: double.infinity,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 124,
+                                  height: 100,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        height: 80,
+                                        width: 80,
+                                        child: FilledButton(
+                                          style: FilledButton.styleFrom(
+                                            tapTargetSize: MaterialTapTargetSize
+                                                .shrinkWrap,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(24),
+                                                bottomLeft: Radius.circular(24),
+                                              ),
+                                            ),
+                                          ),
+                                          child: const SizedBox(
+                                            height: 24,
+                                            child: Text(
+                                              "є",
+                                              style: TextStyle(
+                                                  fontSize: 24, height: 0.4),
+                                            ),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
                 );
               });
