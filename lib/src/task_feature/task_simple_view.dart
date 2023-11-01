@@ -1,52 +1,63 @@
-import 'package:do_important_zanovo/src/sample_feature/sample_item.dart';
+import 'package:do_important_zanovo/src/core/models/task_model.dart';
+import 'package:do_important_zanovo/src/task_feature/task_controller.dart';
+import 'package:do_important_zanovo/src/task_feature/task_form.dart';
 import 'package:flutter/material.dart';
 
-class SampleItemSimpleView extends StatefulWidget {
-  const SampleItemSimpleView({super.key, required this.item});
+class TaskSimpleView extends StatefulWidget {
+  const TaskSimpleView({super.key, required this.task});
 
-  final SampleItem item;
+  final Task task;
   static const double cardBorderRadius = 12.0;
 
   @override
-  State<SampleItemSimpleView> createState() => _SampleItemSimpleViewState();
+  State<TaskSimpleView> createState() => _TaskSimpleViewState();
 }
 
-class _SampleItemSimpleViewState extends State<SampleItemSimpleView> {
-  late bool isDone = widget.item.doneAt != null;
+class _TaskSimpleViewState extends State<TaskSimpleView> {
+  late bool isDone = widget.task.doneAt != null;
+
+  void onTaskCheckTap(bool? value) {
+    setState(() {
+      isDone = value ?? false;
+      value!
+          ? TaskController().markTaskDone(widget.task)
+          : TaskController().markTaskUndone(widget.task);
+    });
+  }
+
+  void onTaskCardTapAction() {
+    editTask(context, widget.task);
+  }
 
   @override
   Widget build(BuildContext context) {
     var doneCheck = SizedBox(
-      height: 27,
-      width: 27,
+      height: 28,
+      width: 28,
       child: Transform.scale(
-          scale: 1.4,
-          child: Checkbox(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              side: MaterialStateBorderSide.resolveWith(
-                (states) => BorderSide(
-                    width: 1.2, color: Theme.of(context).colorScheme.primary),
+        scale: 1.5,
+        child: Checkbox(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            side: MaterialStateBorderSide.resolveWith(
+              (states) => BorderSide(
+                  width: 1.2, color: Theme.of(context).colorScheme.primary),
+            ),
+            value: isDone,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft:
+                    Radius.circular(TaskSimpleView.cardBorderRadius / 2),
+                topRight: Radius.circular(TaskSimpleView.cardBorderRadius / 2),
               ),
-              value: isDone,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
-                      SampleItemSimpleView.cardBorderRadius / 2),
-                  topRight: Radius.circular(
-                      SampleItemSimpleView.cardBorderRadius / 2),
-                ),
-              ),
-              onChanged: (bool? value) {
-                setState(() {
-                  isDone = value ?? false;
-                  // make doneAt true/ listen on list to collection to db
-                });
-              })),
+            ),
+            onChanged: onTaskCheckTap),
+      ),
     );
 
     Widget importance() {
-      bool important = widget.item.importance < 3;
-      bool urgent = widget.item.importance % 2 != 0;
+      bool important =
+          widget.task.importance! < 3 && widget.task.importance! > 0;
+      bool urgent = widget.task.importance! % 2 != 0;
 
       return Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -57,8 +68,7 @@ class _SampleItemSimpleViewState extends State<SampleItemSimpleView> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  topRight:
-                      Radius.circular(SampleItemSimpleView.cardBorderRadius),
+                  topRight: Radius.circular(TaskSimpleView.cardBorderRadius),
                 ),
                 // color: Theme.of(context).colorScheme.tertiary,
                 color: Theme.of(context).colorScheme.surfaceTint,
@@ -86,10 +96,8 @@ class _SampleItemSimpleViewState extends State<SampleItemSimpleView> {
               padding: const EdgeInsets.only(left: 4, right: 4),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  bottomLeft:
-                      Radius.circular(SampleItemSimpleView.cardBorderRadius),
-                  topRight:
-                      Radius.circular(SampleItemSimpleView.cardBorderRadius),
+                  bottomLeft: Radius.circular(TaskSimpleView.cardBorderRadius),
+                  topRight: Radius.circular(TaskSimpleView.cardBorderRadius),
                 ),
                 color: Theme.of(context).colorScheme.tertiaryContainer,
               ),
@@ -114,15 +122,16 @@ class _SampleItemSimpleViewState extends State<SampleItemSimpleView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(widget.item.title,
+            Text(widget.task.title,
                 style: TextStyle(
                     fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
                     height: 1.05)),
-            Text(widget.item.reason,
+            Text(widget.task.reason!,
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurfaceVariant)),
           ]),
     );
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -131,13 +140,13 @@ class _SampleItemSimpleViewState extends State<SampleItemSimpleView> {
           clipBehavior: Clip.antiAlias,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(SampleItemSimpleView.cardBorderRadius),
+              Radius.circular(TaskSimpleView.cardBorderRadius),
             ),
           ),
           child: InkWell(
             borderRadius: const BorderRadius.all(
-                Radius.circular(SampleItemSimpleView.cardBorderRadius)),
-            onTap: () {},
+                Radius.circular(TaskSimpleView.cardBorderRadius)),
+            onTap: onTaskCardTapAction,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

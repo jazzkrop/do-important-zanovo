@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'task_feature/task_list_view.dart';
 import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
@@ -68,9 +68,9 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
-                  case SampleItemListView.routeName:
+                  case TaskListView.routeName:
                   default:
-                    return SampleItemListView(controller: settingsController);
+                    return TaskListView(controller: settingsController);
                 }
               },
             );
