@@ -16,6 +16,7 @@ class TaskController {
       importance: importance,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
+      doneAt: 0,
     );
 
     final tasksRef = db
@@ -88,7 +89,7 @@ class TaskController {
         )
         .doc(task.id);
 
-    await tasksRef.update({"doneAt": FieldValue.delete()});
+    await tasksRef.update({"doneAt": 0});
   }
 
   deleteTask(String id) async {

@@ -4,9 +4,12 @@ import 'package:do_important_zanovo/src/task_feature/task_form.dart';
 import 'package:flutter/material.dart';
 
 class TaskSimpleView extends StatefulWidget {
-  const TaskSimpleView({super.key, required this.task});
+  const TaskSimpleView(
+      {super.key, required this.task, this.importanceMode, this.transperent});
 
   final Task task;
+  final bool? importanceMode;
+  final bool? transperent;
   static const double cardBorderRadius = 12.0;
 
   @override
@@ -14,7 +17,7 @@ class TaskSimpleView extends StatefulWidget {
 }
 
 class _TaskSimpleViewState extends State<TaskSimpleView> {
-  late bool isDone = widget.task.doneAt != null;
+  late bool isDone = widget.task.doneAt != 0;
 
   void onTaskCheckTap(bool? value) {
     setState(() {
@@ -26,6 +29,7 @@ class _TaskSimpleViewState extends State<TaskSimpleView> {
   }
 
   void onTaskCardTapAction() {
+    if (widget.importanceMode != null) return;
     editTask(context, widget.task);
   }
 
@@ -69,6 +73,7 @@ class _TaskSimpleViewState extends State<TaskSimpleView> {
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(TaskSimpleView.cardBorderRadius),
+                  bottomLeft: Radius.circular(TaskSimpleView.cardBorderRadius),
                 ),
                 // color: Theme.of(context).colorScheme.tertiary,
                 color: Theme.of(context).colorScheme.surfaceTint,
@@ -132,42 +137,43 @@ class _TaskSimpleViewState extends State<TaskSimpleView> {
           ]),
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Card(
-          margin: EdgeInsets.zero,
-          clipBehavior: Clip.antiAlias,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(TaskSimpleView.cardBorderRadius),
+    return Opacity(
+      opacity: widget.transperent != null ? 0 : 1,
+      child: Column(
+        children: [
+          Card(
+            margin: EdgeInsets.zero,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(TaskSimpleView.cardBorderRadius),
+              ),
             ),
-          ),
-          child: InkWell(
-            borderRadius: const BorderRadius.all(
-                Radius.circular(TaskSimpleView.cardBorderRadius)),
-            onTap: onTaskCardTapAction,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      taskBody,
-                      importance(),
-                    ],
+            child: InkWell(
+              borderRadius: const BorderRadius.all(
+                  Radius.circular(TaskSimpleView.cardBorderRadius)),
+              onTap: onTaskCardTapAction,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        taskBody,
+                        if (widget.importanceMode == null) importance(),
+                      ],
+                    ),
                   ),
-                ),
-                doneCheck,
-              ],
+                  if (widget.importanceMode == null) doneCheck,
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 16,
-        )
-      ],
+          const SizedBox(
+            height: 16,
+          )
+        ],
+      ),
     );
   }
 }

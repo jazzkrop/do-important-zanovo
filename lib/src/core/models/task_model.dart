@@ -13,11 +13,12 @@ class Task {
   });
 
   static String createdAtStr = 'createdAt';
+  static String doneAtStr = 'doneAt';
 
   final String id;
   final Timestamp? createdAt;
   final Timestamp? updatedAt;
-  final Timestamp? doneAt;
+  final dynamic? doneAt;
   final String title;
   final int? importance;
   final String? reason;

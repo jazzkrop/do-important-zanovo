@@ -1,3 +1,4 @@
+import 'package:do_important_zanovo/src/importance_feature/importance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'task_feature/task_list_view.dart';
@@ -68,9 +69,11 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
+                  case ImportanceScreen.routeName:
+                    return ImportanceScreen();
                   case TaskListView.routeName:
                   default:
-                    return TaskListView(controller: settingsController);
+                    return TaskListView();
                 }
               },
             );
