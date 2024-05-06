@@ -19,7 +19,7 @@ class SettingsController with ChangeNotifier {
   // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
   // final Color _seedColor = Color.fromARGB(255, 162, 111, 243);
-  final Color _seedColor = Color.fromARGB(230, 255, 203, 221);
+  final Color _seedColor = const Color.fromARGB(230, 255, 203, 221);
   // final Color _seedColor = Color.fromARGB(255, 243, 201, 111);
 
   // Allow Widgets to read the user's preferred ThemeMode.
