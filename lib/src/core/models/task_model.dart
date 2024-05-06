@@ -14,6 +14,7 @@ class Task {
 
   static String createdAtStr = 'createdAt';
   static String doneAtStr = 'doneAt';
+  static String importanceStr = 'importance';
 
   final String id;
   final Timestamp? createdAt;

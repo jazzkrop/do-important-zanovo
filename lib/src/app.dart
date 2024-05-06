@@ -18,41 +18,54 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Glue the SettingsController to the MaterialApp.
     //
+    var colorScheme =
+        ColorScheme.fromSeed(seedColor: settingsController.seedColor);
+
+    ThemeData themeData = ThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
+      fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
+      textTheme: GoogleFonts.ysabeauInfantTextTheme()
+          .copyWith(titleMedium: const TextStyle(fontSize: 17)),
+      useMaterial3: true,
+      colorScheme: colorScheme,
+      inputDecorationTheme: const InputDecorationTheme(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      ),
+    );
+
+    ThemeData themeDataDark = themeData.copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: settingsController.seedColor,
+        brightness: Brightness.dark,
+      ),
+      textTheme: GoogleFonts.ysabeauInfantTextTheme(
+              ThemeData(brightness: Brightness.dark).textTheme)
+          .copyWith(titleMedium: const TextStyle(fontSize: 17)),
+    );
+
+    ThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
+      fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
+      textTheme: GoogleFonts.ysabeauInfantTextTheme(
+              ThemeData(brightness: Brightness.dark).textTheme)
+          .copyWith(titleMedium: const TextStyle(fontSize: 17)),
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: settingsController.seedColor,
+        brightness: Brightness.dark,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      ),
+    );
+    print(colorScheme.toString());
     // The ListenableBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
     return ListenableBuilder(
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
-        ThemeData themeData = ThemeData(
-          bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
-          fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
-          textTheme: GoogleFonts.ysabeauInfantTextTheme()
-              .copyWith(titleMedium: const TextStyle(fontSize: 17)),
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: settingsController.seedColor,
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          ),
-        );
-        ThemeData themeDataDark = ThemeData(
-          bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
-          fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
-          textTheme: GoogleFonts.ysabeauInfantTextTheme(
-                  ThemeData(brightness: Brightness.dark).textTheme)
-              .copyWith(titleMedium: const TextStyle(fontSize: 17)),
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: settingsController.seedColor,
-            brightness: Brightness.dark,
-          ),
-          inputDecorationTheme: const InputDecorationTheme(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          ),
-        );
         return MaterialApp(
           restorationScopeId: 'app',
           debugShowCheckedModeBanner: false,

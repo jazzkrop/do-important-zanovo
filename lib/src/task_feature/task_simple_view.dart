@@ -133,46 +133,43 @@ class _TaskSimpleViewState extends State<TaskSimpleView> {
                     height: 1.05)),
             Text(widget.task.reason!,
                 style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
                     color: Theme.of(context).colorScheme.onSurfaceVariant)),
           ]),
     );
 
     return Opacity(
       opacity: widget.transperent != null ? 0 : 1,
-      child: Column(
-        children: [
-          Card(
-            margin: EdgeInsets.zero,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(TaskSimpleView.cardBorderRadius),
-              ),
-            ),
-            child: InkWell(
-              borderRadius: const BorderRadius.all(
-                  Radius.circular(TaskSimpleView.cardBorderRadius)),
-              onTap: onTaskCardTapAction,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        taskBody,
-                        if (widget.importanceMode == null) importance(),
-                      ],
-                    ),
-                  ),
-                  if (widget.importanceMode == null) doneCheck,
-                ],
-              ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: Card(
+          margin: EdgeInsets.zero,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(TaskSimpleView.cardBorderRadius),
             ),
           ),
-          const SizedBox(
-            height: 16,
-          )
-        ],
+          child: InkWell(
+            borderRadius: const BorderRadius.all(
+                Radius.circular(TaskSimpleView.cardBorderRadius)),
+            onTap: onTaskCardTapAction,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      taskBody,
+                      if (widget.importanceMode == null) importance(),
+                    ],
+                  ),
+                ),
+                if (widget.importanceMode == null) doneCheck,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

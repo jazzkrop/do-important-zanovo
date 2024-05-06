@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -32,5 +33,14 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+  runApp(
+    ScreenUtilInit(
+      useInheritedMediaQuery: true,
+      // initial size is like sony xperia 5 ii
+      designSize: const Size(375, 875),
+      builder: (context, child) {
+        return MyApp(settingsController: settingsController);
+      },
+    ),
+  );
 }

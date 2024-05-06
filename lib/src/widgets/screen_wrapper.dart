@@ -10,6 +10,7 @@ class ScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: null,
       body: SafeArea(
         child: Stack(children: [

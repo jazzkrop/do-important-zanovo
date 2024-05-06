@@ -25,6 +25,8 @@ dependencies:
   shared_preferences: ^2.2.2
   palette_generator: ^0.3.3+3
   uuid: ^4.1.0
+  delayed_display: ^2.0.0
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:

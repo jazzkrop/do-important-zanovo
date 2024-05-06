@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:do_important_zanovo/src/core/services/db_constants.dart';
 import 'package:do_important_zanovo/src/importance_feature/importance_screen.dart';
+import 'package:delayed_display/delayed_display.dart';
+import 'package:do_important_zanovo/src/settings/settings_view.dart';
 import 'package:do_important_zanovo/src/task_feature/task_form.dart';
 import 'package:do_important_zanovo/src/task_feature/task_simple_view.dart';
 import 'package:do_important_zanovo/src/task_feature/widgets/modal_auth.dart';
 import 'package:do_important_zanovo/src/widgets/screen_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../core/models/task_model.dart';
 
@@ -27,16 +30,23 @@ class _TaskListViewState extends State<TaskListView> {
               .collection(DatabasePaths.users)
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection(DatabasePaths.tasks)
-              .orderBy(Task.createdAtStr, descending: true)
+              .orderBy(Task.importanceStr, descending: false)
               .snapshots()
           : const Stream.empty();
 
+  AnimatedListState taskState = AnimatedListState();
+
+  late var taskSubscription;
   @override
   void initState() {
     super.initState();
     // modal auth
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ModalAuth().main(context);
+    });
+    // update animation state
+    tasksStream.listen((event) {
+      print(event.docChanges);
     });
   }
 
@@ -54,7 +64,7 @@ class _TaskListViewState extends State<TaskListView> {
           ),
           IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(ImportanceScreen.routeName);
+                Navigator.of(context).pushNamed(SettingsView.routeName);
               },
               color: Theme.of(context).colorScheme.secondary,
               icon: const Icon(Icons.settings_sharp)),
@@ -118,6 +128,23 @@ class _TaskListViewState extends State<TaskListView> {
                             ));
                       },
                     );
+                    // return AnimatedList(
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   shrinkWrap: true,
+                    //   itemBuilder: (context, index, animation) {
+                    //     final item = snapshot.data!.docs[index];
+                    //     return Padding(
+                    //         padding:
+                    //             const EdgeInsets.only(left: 16, right: 16.0),
+                    //         child: TaskSimpleView(
+                    //           key: Key(item.id),
+                    //           task: Task.fromFirestore(
+                    //               item
+                    //                   as DocumentSnapshot<Map<String, dynamic>>,
+                    //               SnapshotOptions()),
+                    //         ));
+                    //   },
+                    // );
                   }),
               const SizedBox(
                 height: 120,

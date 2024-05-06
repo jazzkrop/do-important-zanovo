@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:do_important_zanovo/src/core/models/task_model.dart';
 import 'package:do_important_zanovo/src/task_feature/task_controller.dart';
 import 'package:do_important_zanovo/src/task_feature/widgets/importance_form.dart';
@@ -8,8 +10,13 @@ createTask(context) {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return TaskForm();
+        return const TaskForm();
       });
+  double formHeight = screenSize.width;
+
+// 411 pixel 6a
+// 392 telefon vlada xiaomi
+  //375 xperia 5 ii
 }
 
 editTask(context, Task initialTask) {
@@ -22,6 +29,9 @@ editTask(context, Task initialTask) {
         );
       });
 }
+
+FlutterView view = WidgetsBinding.instance.platformDispatcher.views.first;
+Size screenSize = view.physicalSize / view.devicePixelRatio;
 
 class TaskForm extends StatefulWidget {
   const TaskForm({super.key, this.initialTask});
@@ -79,6 +89,7 @@ class _TaskFormState extends State<TaskForm> {
     }
   }
 
+  final viewInsets = FlutterView;
   @override
   Widget build(BuildContext context) {
     if (firtTitleAlreadyFocused == false) {
@@ -170,8 +181,8 @@ class _TaskFormState extends State<TaskForm> {
                     Expanded(
                       child: Column(
                         children: [
-                          Text("почекає"),
-                          SizedBox(height: 4),
+                          const Text("почекає"),
+                          const SizedBox(height: 4),
                           ImportanceForm(
                               importanceType: 2,
                               value: importanceState == 2,
@@ -205,6 +216,7 @@ class _TaskFormState extends State<TaskForm> {
                                     ),
                                   ),
                                 ),
+                                onPressed: deleteTask,
                                 child: const SizedBox(
                                   height: 24,
                                   child: Text(
@@ -212,7 +224,6 @@ class _TaskFormState extends State<TaskForm> {
                                     style: TextStyle(fontSize: 24, height: 0.4),
                                   ),
                                 ),
-                                onPressed: deleteTask,
                               ),
                             ),
                         ],
@@ -280,6 +291,7 @@ class _TaskFormState extends State<TaskForm> {
                                   ),
                                 ),
                               ),
+                              onPressed: onSuccesTap,
                               child: const SizedBox(
                                 height: 24,
                                 child: Text(
@@ -287,7 +299,6 @@ class _TaskFormState extends State<TaskForm> {
                                   style: TextStyle(fontSize: 24, height: 0.4),
                                 ),
                               ),
-                              onPressed: onSuccesTap,
                             ),
                           ),
                         ],
