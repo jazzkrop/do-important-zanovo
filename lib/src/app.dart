@@ -34,17 +34,7 @@ class MyApp extends StatelessWidget {
       ),
     );
 
-    ThemeData themeDataDark = themeData.copyWith(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: settingsController.seedColor,
-        brightness: Brightness.dark,
-      ),
-      textTheme: GoogleFonts.ysabeauInfantTextTheme(
-              ThemeData(brightness: Brightness.dark).textTheme)
-          .copyWith(titleMedium: const TextStyle(fontSize: 17)),
-    );
-
-    ThemeData(
+    ThemeData themeDataDark = ThemeData(
       bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
       fontFamily: GoogleFonts.ysabeauInfant().fontFamily,
       textTheme: GoogleFonts.ysabeauInfantTextTheme(
@@ -60,6 +50,7 @@ class MyApp extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       ),
     );
+
     print(colorScheme.toString());
     // The ListenableBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.

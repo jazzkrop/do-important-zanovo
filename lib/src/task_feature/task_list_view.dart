@@ -57,11 +57,7 @@ class _TaskListViewState extends State<TaskListView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: () {},
-            color: Theme.of(context).colorScheme.secondary,
-            icon: const Icon(Icons.question_mark_rounded),
-          ),
+          const SizedBox(width: 12),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(SettingsView.routeName);
