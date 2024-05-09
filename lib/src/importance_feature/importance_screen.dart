@@ -64,8 +64,7 @@ class _ImportanceScreenState extends State<ImportanceScreen> {
       },
       child: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
-        child: Expanded(
-            child: Column(
+        child: Column(
           children: [
             const SizedBox(
               height: 12,
@@ -158,7 +157,7 @@ class _ImportanceScreenState extends State<ImportanceScreen> {
               ),
             ),
           ],
-        )),
+        ),
       ),
     );
   }

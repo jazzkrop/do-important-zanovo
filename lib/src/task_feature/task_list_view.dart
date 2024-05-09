@@ -78,75 +78,71 @@ class _TaskListViewState extends State<TaskListView> {
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(
             decelerationRate: ScrollDecelerationRate.fast),
-        child: Expanded(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 12,
-              ),
-              topActions,
-              const SizedBox(
-                height: 24,
-              ),
-              StreamBuilder<QuerySnapshot>(
-                  stream: tasksStream,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return const SizedBox(
-                          height: 500, child: Center(child: Text("помилка.")));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const SizedBox(
-                          height: 500,
-                          child: Center(child: Text("завантаження.")));
-                    }
-                    if (snapshot.data?.docs.isEmpty ?? true) {
-                      return const SizedBox(
-                          height: 500, child: Center(child: Text("пусто.")));
-                    }
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      restorationId: 'TaskListView',
-                      itemCount: snapshot.data?.docs.length ?? 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        final item = snapshot.data!.docs[index];
-                        return Padding(
-                            padding:
-                                const EdgeInsets.only(left: 16, right: 16.0),
-                            child: TaskSimpleView(
-                              task: Task.fromFirestore(
-                                  item
-                                      as DocumentSnapshot<Map<String, dynamic>>,
-                                  SnapshotOptions()),
-                              key: Key(item.id),
-                            ));
-                      },
-                    );
-                    // return AnimatedList(
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   shrinkWrap: true,
-                    //   itemBuilder: (context, index, animation) {
-                    //     final item = snapshot.data!.docs[index];
-                    //     return Padding(
-                    //         padding:
-                    //             const EdgeInsets.only(left: 16, right: 16.0),
-                    //         child: TaskSimpleView(
-                    //           key: Key(item.id),
-                    //           task: Task.fromFirestore(
-                    //               item
-                    //                   as DocumentSnapshot<Map<String, dynamic>>,
-                    //               SnapshotOptions()),
-                    //         ));
-                    //   },
-                    // );
-                  }),
-              const SizedBox(
-                height: 120,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 12,
+            ),
+            topActions,
+            const SizedBox(
+              height: 24,
+            ),
+            StreamBuilder<QuerySnapshot>(
+                stream: tasksStream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return const SizedBox(
+                        height: 500, child: Center(child: Text("помилка.")));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox(
+                        height: 500,
+                        child: Center(child: Text("завантаження.")));
+                  }
+                  if (snapshot.data?.docs.isEmpty ?? true) {
+                    return const SizedBox(
+                        height: 500, child: Center(child: Text("пусто.")));
+                  }
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    restorationId: 'TaskListView',
+                    itemCount: snapshot.data?.docs.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      final item = snapshot.data!.docs[index];
+                      return Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16.0),
+                          child: TaskSimpleView(
+                            task: Task.fromFirestore(
+                                item as DocumentSnapshot<Map<String, dynamic>>,
+                                SnapshotOptions()),
+                            key: Key(item.id),
+                          ));
+                    },
+                  );
+                  // return AnimatedList(
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   itemBuilder: (context, index, animation) {
+                  //     final item = snapshot.data!.docs[index];
+                  //     return Padding(
+                  //         padding:
+                  //             const EdgeInsets.only(left: 16, right: 16.0),
+                  //         child: TaskSimpleView(
+                  //           key: Key(item.id),
+                  //           task: Task.fromFirestore(
+                  //               item
+                  //                   as DocumentSnapshot<Map<String, dynamic>>,
+                  //               SnapshotOptions()),
+                  //         ));
+                  //   },
+                  // );
+                }),
+            const SizedBox(
+              height: 120,
+            ),
+          ],
         ),
       ),
     );

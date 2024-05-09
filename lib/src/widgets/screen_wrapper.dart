@@ -14,10 +14,10 @@ class ScreenWrapper extends StatelessWidget {
       appBar: null,
       body: SafeArea(
         child: Stack(children: [
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: child,
+          Column(
+            children: [
+              Expanded(child: child),
+            ],
           ),
           Positioned(
             bottom: 0,
