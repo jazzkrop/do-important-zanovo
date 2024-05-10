@@ -10,11 +10,13 @@ class SettingsService {
   /// Loads the User's preferred ThemeMode from local or remote storage.
   Future<ThemeMode> themeMode() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var themeStr = prefs.getString('themeMode');
-    if (themeStr == "") {
-      return ThemeMode.system;
+    if (themeStr == "ThemeMode.dark") {
+      return ThemeMode.dark;
+    } else if (themeStr == "ThemeMode.light") {
+      return ThemeMode.light;
     }
-    // TODO: store from shared prefs
     return ThemeMode.system;
   }
 
@@ -22,7 +24,8 @@ class SettingsService {
   Future<void> updateThemeMode(ThemeMode theme) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // await prefs.setString('themeMode', theme.toString());
+    await prefs.setString('themeMode', theme.toString());
+
     // Use the shared_preferences package to persist settings locally or the
     // http package to persist settings over the network.
   }

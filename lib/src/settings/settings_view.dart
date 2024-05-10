@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 import 'settings_controller.dart';
@@ -25,26 +27,53 @@ class SettingsView extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         // Glue the SettingsController to the theme selection DropdownButton.
         //
+
+        // тема:
+        // системна, темна, світла
         // When a user selects a theme from the dropdown list, the
         // SettingsController is updated, which rebuilds the MaterialApp.
-        child: DropdownButton<ThemeMode>(
-          // Read the selected themeMode from the controller
-          value: controller.themeMode,
-          // Call the updateThemeMode method any time the user selects a theme.
-          onChanged: controller.updateThemeMode,
-          items: const [
-            DropdownMenuItem(
-              value: ThemeMode.system,
-              child: Text('Повторювати системну'),
+        child: Column(
+          children: [
+            SegmentedButton(
+              segments: const <ButtonSegment<ThemeMode>>[
+                ButtonSegment<ThemeMode>(
+                    value: ThemeMode.system,
+                    label: Text('Системна'),
+                    icon: Icon(Icons.phone_iphone_outlined)),
+                ButtonSegment<ThemeMode>(
+                    value: ThemeMode.dark,
+                    label: Text('Темна'),
+                    icon: Icon(Icons.nightlight_outlined)),
+                ButtonSegment<ThemeMode>(
+                    value: ThemeMode.light,
+                    label: Text('Світла'),
+                    icon: Icon(Icons.wb_sunny_outlined)),
+              ],
+              selected: <ThemeMode>{controller.themeMode},
+              onSelectionChanged: (Set<ThemeMode> newSelection) {
+                controller.updateThemeMode(newSelection.first);
+              },
             ),
-            DropdownMenuItem(
-              value: ThemeMode.light,
-              child: Text('Світла'),
+            DropdownButton<ThemeMode>(
+              // Read the selected themeMode from the controller
+              value: controller.themeMode,
+              // Call the updateThemeMode method any time the user selects a theme.
+              onChanged: controller.updateThemeMode,
+              items: const [
+                DropdownMenuItem(
+                  value: ThemeMode.system,
+                  child: Text('Повторювати системну'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.light,
+                  child: Text('Світла'),
+                ),
+                DropdownMenuItem(
+                  value: ThemeMode.dark,
+                  child: Text('Темна'),
+                )
+              ],
             ),
-            DropdownMenuItem(
-              value: ThemeMode.dark,
-              child: Text('Темна'),
-            )
           ],
         ),
       ),
