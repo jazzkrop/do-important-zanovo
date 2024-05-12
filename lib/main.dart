@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:do_important_zanovo/src/settings/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -21,6 +23,7 @@ void main() async {
   // Load the user's preferred theme while the splash screen is displayed.
   // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -34,13 +37,18 @@ void main() async {
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
   runApp(
-    ScreenUtilInit(
-      useInheritedMediaQuery: true,
-      // initial size is like sony xperia 5 ii
-      designSize: const Size(375, 875),
-      builder: (context, child) {
-        return MyApp(settingsController: settingsController);
-      },
+    ChangeNotifierProvider(
+      create: (context) => SettingsModel(),
+      child: ScreenUtilInit(
+        useInheritedMediaQuery: true,
+        // initial size is like sony xperia 5 ii
+        designSize: const Size(375, 875),
+        builder: (context, child) {
+          Provider.of<SettingsModel>(context, listen: false)
+              .settingsController = settingsController;
+          return MyApp();
+        },
+      ),
     ),
   );
 }

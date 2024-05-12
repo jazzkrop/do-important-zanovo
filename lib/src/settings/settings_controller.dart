@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'settings_service.dart';
 
-enum ThemeType { light, dark, system }
-
 /// A class that many Widgets can interact with to read user settings, update
 /// user settings, or listen to user settings changes.
 ///
@@ -15,23 +13,21 @@ class SettingsController with ChangeNotifier {
   // Make SettingsService a private variable so it is not used directly.
   final SettingsService _settingsService;
 
-  // Make ThemeMode a private variable so it is not updated directly without
-  // also persisting the changes with the SettingsService.
   late ThemeMode _themeMode;
-  // final Color _seedColor = Color.fromARGB(255, 162, 111, 243);
-  final Color _seedColor = const Color.fromARGB(230, 255, 203, 221);
-  // final Color _seedColor = Color.fromARGB(255, 243, 201, 111);
+  late Color _seedColor;
+  late bool _hapticFeedback;
 
-  // Allow Widgets to read the user's preferred ThemeMode.
   ThemeMode get themeMode => _themeMode;
   Color get seedColor => _seedColor;
+  bool get hapticFeedback => _hapticFeedback;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
   /// settings from the service.
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
-
+    _seedColor = await _settingsService.seedColor();
+    _hapticFeedback = await _settingsService.hapticFeedback();
     // Important! Inform listeners a change has occurred.
     notifyListeners();
   }
@@ -49,8 +45,30 @@ class SettingsController with ChangeNotifier {
     // Important! Inform listeners a change has occurred.
     notifyListeners();
 
-    // Persist the changes to a local database or the internet using the
-    // SettingService.
     await _settingsService.updateThemeMode(newThemeMode);
+  }
+
+  Future<void> updateSeedColor(Color? newSeedColor) async {
+    if (newSeedColor == null) return;
+
+    if (newSeedColor == _seedColor) return;
+
+    _seedColor = newSeedColor;
+
+    notifyListeners();
+
+    await _settingsService.updateSeedColor(newSeedColor);
+  }
+
+  Future<void> updateHapticFeedback(bool? newHapticFeedback) async {
+    if (newHapticFeedback == null) return;
+
+    if (newHapticFeedback == _hapticFeedback) return;
+
+    _hapticFeedback = newHapticFeedback;
+
+    notifyListeners();
+
+    await _settingsService.updateHapticFeedback(newHapticFeedback);
   }
 }

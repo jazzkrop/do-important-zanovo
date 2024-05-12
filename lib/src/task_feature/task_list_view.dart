@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:do_important_zanovo/src/core/services/db_constants.dart';
 import 'package:do_important_zanovo/src/importance_feature/importance_screen.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:do_important_zanovo/src/settings/settings_view.dart';
 import 'package:do_important_zanovo/src/task_feature/task_form.dart';
 import 'package:do_important_zanovo/src/task_feature/task_simple_view.dart';
@@ -9,7 +8,6 @@ import 'package:do_important_zanovo/src/task_feature/widgets/modal_auth.dart';
 import 'package:do_important_zanovo/src/widgets/screen_wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../core/models/task_model.dart';
 
@@ -37,6 +35,7 @@ class _TaskListViewState extends State<TaskListView> {
   AnimatedListState taskState = AnimatedListState();
 
   late var taskSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -44,14 +43,16 @@ class _TaskListViewState extends State<TaskListView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ModalAuth().main(context);
     });
-    // update animation state
     tasksStream.listen((event) {
-      print(event.docChanges);
+      // print(event.docChanges);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    tasksStream.listen((event) {
+      print(event.docChanges);
+    });
     var topActions = Padding(
       padding: const EdgeInsets.only(left: 12, right: 12),
       child: Row(

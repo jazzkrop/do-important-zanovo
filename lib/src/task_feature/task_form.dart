@@ -1,14 +1,16 @@
 import 'dart:ui';
 
 import 'package:do_important_zanovo/src/core/models/task_model.dart';
+import 'package:do_important_zanovo/src/settings/settings_model.dart';
 import 'package:do_important_zanovo/src/task_feature/task_controller.dart';
 import 'package:do_important_zanovo/src/task_feature/widgets/importance_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 createTask(context) {
-  double formHeight = screenSize.width * 0.75;
-  print(formHeight);
+  double formHeight = screenSize.height * 0.6;
+
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -25,12 +27,16 @@ createTask(context) {
 }
 
 editTask(context, Task initialTask) {
+  double formHeight = screenSize.height * 0.6;
   showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return TaskForm(
-          initialTask: initialTask,
+        return SizedBox(
+          height: formHeight,
+          child: TaskForm(
+            initialTask: initialTask,
+          ),
         );
       });
 }
@@ -53,16 +59,24 @@ class _TaskFormState extends State<TaskForm> {
   var reasonFocusNode = FocusNode();
   bool firtTitleAlreadyFocused = false;
 
-  late int importanceState;
+  int importanceState = 4;
 
   void deleteTask() async {
-    HapticFeedback.lightImpact();
+    if (Provider.of<SettingsModel>(context, listen: false)
+        .settingsController
+        .hapticFeedback) {
+      HapticFeedback.lightImpact();
+    }
     TaskController().deleteTask(widget.initialTask!.id);
     Navigator.pop(context);
   }
 
   void onSuccesTap() {
-    HapticFeedback.lightImpact();
+    if (Provider.of<SettingsModel>(context, listen: false)
+        .settingsController
+        .hapticFeedback) {
+      HapticFeedback.lightImpact();
+    }
 
     TaskController taskController = TaskController();
 
@@ -93,7 +107,7 @@ class _TaskFormState extends State<TaskForm> {
     } else {
       titleController.text = "";
       reasonController.text = "";
-      importanceState = 0;
+      importanceState = 4;
     }
   }
 
@@ -103,53 +117,56 @@ class _TaskFormState extends State<TaskForm> {
       titleFocusNode.requestFocus();
     }
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: TextField(
-            maxLength: 60,
-            scrollPadding: EdgeInsets.zero,
-            decoration: const InputDecoration(
-                alignLabelWithHint: true,
-                labelText: "що",
-                contentPadding: EdgeInsets.zero,
-                hintText: 'шо будеш робити?'),
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: TextField(
+                maxLength: 60,
+                scrollPadding: EdgeInsets.zero,
+                decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: "що",
+                    contentPadding: EdgeInsets.zero,
+                    hintText: 'шо будеш робити?'),
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+                ),
+                controller: titleController,
+                focusNode: titleFocusNode,
+                onEditingComplete: () {
+                  if (reasonController.text == "") {
+                    firtTitleAlreadyFocused = true;
+                    reasonFocusNode.requestFocus();
+                  } else {
+                    titleFocusNode.unfocus(
+                        disposition: UnfocusDisposition.scope);
+                  }
+                },
+              ),
             ),
-            controller: titleController,
-            focusNode: titleFocusNode,
-            onEditingComplete: () {
-              if (reasonController.text == "") {
-                firtTitleAlreadyFocused = true;
-                reasonFocusNode.requestFocus();
-              } else {
-                titleFocusNode.unfocus(disposition: UnfocusDisposition.scope);
-              }
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: TextField(
-            maxLength: 30,
-            decoration: const InputDecoration(
-                alignLabelWithHint: true,
-                labelText: "чому",
-                contentPadding: EdgeInsets.zero,
-                hintText: 'чому ти це робиш?'),
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: TextField(
+                maxLength: 30,
+                decoration: const InputDecoration(
+                    alignLabelWithHint: true,
+                    labelText: "чому",
+                    contentPadding: EdgeInsets.zero,
+                    hintText: 'чому ти це робиш?'),
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
+                ),
+                focusNode: reasonFocusNode,
+                controller: reasonController,
+              ),
             ),
-            focusNode: reasonFocusNode,
-            controller: reasonController,
-          ),
-        ),
-        const SizedBox(
-          height: 12,
+          ],
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 48),
           child: Column(
             children: [
               Row(
@@ -278,7 +295,7 @@ class _TaskFormState extends State<TaskForm> {
                     width: 124,
                     height: 100,
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      // crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         SizedBox(

@@ -1,5 +1,7 @@
+import 'package:do_important_zanovo/src/settings/settings_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ImportanceForm extends StatelessWidget {
   ImportanceForm(
@@ -14,8 +16,12 @@ class ImportanceForm extends StatelessWidget {
 
   double circleDiametr = 20;
 
-  void onImportanceTap() {
-    HapticFeedback.lightImpact();
+  void onImportanceTap(context) {
+    if (Provider.of<SettingsModel>(context, listen: false)
+        .settingsController
+        .hapticFeedback) {
+      HapticFeedback.lightImpact();
+    }
     onTap();
   }
 
@@ -27,7 +33,9 @@ class ImportanceForm extends StatelessWidget {
           padding: const EdgeInsets.all(4.0),
           child: InkWell(
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(24)),
-            onTap: onImportanceTap,
+            onTap: () {
+              onImportanceTap(context);
+            },
             child: AspectRatio(
               aspectRatio: 1,
               child: Ink(
@@ -59,7 +67,9 @@ class ImportanceForm extends StatelessWidget {
           child: InkWell(
             borderRadius:
                 const BorderRadius.only(topRight: Radius.circular(24)),
-            onTap: onImportanceTap,
+            onTap: () {
+              onImportanceTap(context);
+            },
             child: AspectRatio(
               aspectRatio: 1,
               child: Ink(
@@ -91,7 +101,9 @@ class ImportanceForm extends StatelessWidget {
           child: InkWell(
             borderRadius:
                 const BorderRadius.only(bottomLeft: Radius.circular(24)),
-            onTap: onImportanceTap,
+            onTap: () {
+              onImportanceTap(context);
+            },
             child: AspectRatio(
               aspectRatio: 1,
               child: Ink(
@@ -122,7 +134,9 @@ class ImportanceForm extends StatelessWidget {
           child: InkWell(
             borderRadius:
                 const BorderRadius.only(bottomRight: Radius.circular(24)),
-            onTap: onImportanceTap,
+            onTap: () {
+              onImportanceTap(context);
+            },
             child: AspectRatio(
               aspectRatio: 1,
               child: Ink(

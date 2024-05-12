@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:do_important_zanovo/src/settings/settings_service.dart';
 import 'package:flutter/material.dart';
 
 import 'settings_controller.dart';
@@ -19,7 +20,10 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Налаштування'),
+        title: const Text(
+          'Налаштування',
+          style: TextStyle(fontSize: 32),
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -34,44 +38,75 @@ class SettingsView extends StatelessWidget {
         // SettingsController is updated, which rebuilds the MaterialApp.
         child: Column(
           children: [
-            SegmentedButton(
-              segments: const <ButtonSegment<ThemeMode>>[
-                ButtonSegment<ThemeMode>(
-                    value: ThemeMode.system,
-                    label: Text('Системна'),
-                    icon: Icon(Icons.phone_iphone_outlined)),
-                ButtonSegment<ThemeMode>(
-                    value: ThemeMode.dark,
-                    label: Text('Темна'),
-                    icon: Icon(Icons.nightlight_outlined)),
-                ButtonSegment<ThemeMode>(
-                    value: ThemeMode.light,
-                    label: Text('Світла'),
-                    icon: Icon(Icons.wb_sunny_outlined)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SegmentedButton(
+                  segments: const <ButtonSegment<ThemeMode>>[
+                    ButtonSegment<ThemeMode>(
+                        value: ThemeMode.system,
+                        label: Text('Система'),
+                        icon: Icon(Icons.phone_iphone_outlined)),
+                    ButtonSegment<ThemeMode>(
+                        value: ThemeMode.dark,
+                        label: Text('Темна'),
+                        icon: Icon(Icons.nightlight_outlined)),
+                    ButtonSegment<ThemeMode>(
+                        value: ThemeMode.light,
+                        label: Text('Світла'),
+                        icon: Icon(Icons.wb_sunny_outlined)),
+                  ],
+                  selected: <ThemeMode>{controller.themeMode},
+                  onSelectionChanged: (Set<ThemeMode> newSelection) {
+                    controller.updateThemeMode(newSelection.first);
+                  },
+                ),
               ],
-              selected: <ThemeMode>{controller.themeMode},
-              onSelectionChanged: (Set<ThemeMode> newSelection) {
-                controller.updateThemeMode(newSelection.first);
-              },
             ),
-            DropdownButton<ThemeMode>(
-              // Read the selected themeMode from the controller
-              value: controller.themeMode,
-              // Call the updateThemeMode method any time the user selects a theme.
-              onChanged: controller.updateThemeMode,
-              items: const [
-                DropdownMenuItem(
-                  value: ThemeMode.system,
-                  child: Text('Повторювати системну'),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SegmentedButton(
+                  segments: <ButtonSegment<Color>>[
+                    ButtonSegment<Color>(
+                      value: SeedColors.greenColor,
+                      label: Text('Зелений'),
+                      icon: Icon(Icons.nature_outlined),
+                    ),
+                    ButtonSegment<Color>(
+                        value: SeedColors.pinkColor,
+                        label: Text('Рожевий'),
+                        icon: Icon(Icons.auto_awesome_sharp)),
+                  ],
+                  selected: <Color>{controller.seedColor},
+                  onSelectionChanged: (Set<Color> newSelection) {
+                    controller.updateSeedColor(newSelection.first);
+                  },
                 ),
-                DropdownMenuItem(
-                  value: ThemeMode.light,
-                  child: Text('Світла'),
+              ],
+            ),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SegmentedButton(
+                  segments: const <ButtonSegment<bool>>[
+                    ButtonSegment<bool>(
+                      value: true,
+                      label: Text('Вібрація'),
+                      icon: Icon(Icons.vibration),
+                    ),
+                    ButtonSegment<bool>(
+                        value: false,
+                        label: Text('Без'),
+                        icon: Icon(Icons.do_disturb_alt_outlined)),
+                  ],
+                  selected: <bool>{controller.hapticFeedback},
+                  onSelectionChanged: (Set<bool> newSelection) {
+                    controller.updateHapticFeedback(newSelection.first);
+                  },
                 ),
-                DropdownMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text('Темна'),
-                )
               ],
             ),
           ],
