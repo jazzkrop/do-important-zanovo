@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:do_important_zanovo/src/settings/settings_model.dart';
 import 'package:flutter/material.dart';
@@ -28,10 +30,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final db = FirebaseFirestore.instance;
-  db.settings = const Settings(
-    persistenceEnabled: true,
-    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
-  );
+  if (Platform.isIOS || Platform.isAndroid) {
+    db.settings = const Settings(
+      persistenceEnabled: true,
+      cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+    );
+  }
 
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the

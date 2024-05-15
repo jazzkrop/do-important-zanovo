@@ -59,7 +59,7 @@ class _TaskFormState extends State<TaskForm> {
   var reasonFocusNode = FocusNode();
   bool firtTitleAlreadyFocused = false;
 
-  int importanceState = 4;
+  int importanceState = 0;
 
   void deleteTask() async {
     if (Provider.of<SettingsModel>(context, listen: false)
@@ -81,6 +81,9 @@ class _TaskFormState extends State<TaskForm> {
     TaskController taskController = TaskController();
 
     if (widget.initialTask == null) {
+      if (importanceState == 0) {
+        importanceState = 4;
+      }
       taskController.createTask(
         title: titleController.text,
         reason: reasonController.text,
@@ -107,7 +110,7 @@ class _TaskFormState extends State<TaskForm> {
     } else {
       titleController.text = "";
       reasonController.text = "";
-      importanceState = 4;
+      importanceState = 0;
     }
   }
 
